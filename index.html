@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Resume Analyzer</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-black text-white min-h-screen flex items-center justify-center">
+
+<div class="w-full max-w-4xl p-6">
+
+  <h1 class="text-3xl font-bold text-center mb-6 tracking-wide">
+    AI Resume Analyzer
+  </h1>
+
+  <div id="dropZone"
+    class="border border-gray-700 p-10 rounded-xl text-center cursor-pointer 
+    hover:bg-white hover:text-black transition-all duration-300">
+
+    <p>Drag & Drop Resume (PDF)</p>
+    <input type="file" id="fileInput" class="hidden" accept="application/pdf"/>
+  </div>
+
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
