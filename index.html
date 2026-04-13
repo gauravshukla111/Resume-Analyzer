@@ -5,6 +5,7 @@
 <title>AI Resume Analyzer</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
 </head>
 
@@ -16,6 +17,7 @@
     AI Resume Analyzer
   </h1>
 
+  <!-- upload resume -->
   <div id="dropZone"
     class="border border-gray-700 p-10 rounded-xl text-center cursor-pointer 
     hover:bg-white hover:text-black transition-all duration-300">
@@ -24,6 +26,41 @@
     <input type="file" id="fileInput" class="hidden" accept="application/pdf"/>
   </div>
 
+  <!-- role -->
+  <input id="jobRole"
+    placeholder="Enter role (e.g. frontend developer)"
+    class="mt-6 w-full p-3 bg-black border border-gray-700 rounded outline-none focus:border-white"/>
+
+  <!-- button -->
+  <button id="analyzeBtn"
+    class="mt-4 w-full border border-white p-3 rounded hover:bg-white hover:text-black transition">
+    Analyze Resume
+  </button>
+
+  <!-- result -->
+  <div id="result" class="hidden mt-6 space-y-6">
+
+    <!-- progress show-->
+    <div>
+      <p class="mb-2">Match Score</p>
+      <div class="w-full bg-gray-800 h-3 rounded">
+        <div id="progressBar" class="h-3 bg-white rounded w-0 transition-all duration-700"></div>
+      </div>
+      <p id="score" class="mt-2 text-xl"></p>
+    </div>
+
+    <!-- missing data section-->
+    <div>
+      <h2 class="mb-2">Missing Skills</h2>
+      <ul id="missing" class="text-gray-400"></ul>
+    </div>
+
+    <div>
+      <h2 class="mb-2">Suggestions</h2>
+      <ul id="suggestions" class="text-gray-400"></ul>
+    </div>
+
+  </div>
 
 </div>
 
