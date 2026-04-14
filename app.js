@@ -27,6 +27,7 @@ document.getElementById("resume").addEventListener("change", async (e)=>{
   };
 
   reader.readAsArrayBuffer(file);
+  
 });
 
 
