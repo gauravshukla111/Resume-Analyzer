@@ -1,6 +1,6 @@
 let resumeText = "";
 
-/* drag drop */
+/* drag drop resume */
 const dropArea = document.getElementById("dropArea");
 const input = document.getElementById("resume");
 
@@ -12,7 +12,7 @@ dropArea.ondrop = (e)=>{
 dropArea.ondragover = e=> e.preventDefault();
 input.onchange = ()=> handleFile(input.files[0]);
 
-/* read pdf */
+/* read pdf section logic*/
 async function handleFile(file){
   document.getElementById("status").innerText = file.name;
 
@@ -36,7 +36,7 @@ async function handleFile(file){
   reader.readAsArrayBuffer(file);
 }
 
-/* REAL SKILL DATABASE */
+/* real skill database */
 const SKILLS = [
   "html","css","javascript","react","redux","nextjs","tailwind",
   "node","express","mongodb","mysql","postgres",
@@ -46,6 +46,7 @@ const SKILLS = [
 ];
 
 /* stopwords remove */
+
 const STOPWORDS = ["the","and","for","with","developer","team","experience"];
 
 /* extract useful keywords */
@@ -57,7 +58,7 @@ function extractKeywords(text){
     .filter(w => w.length > 2 && !STOPWORDS.includes(w));
 }
 
-/* MAIN ANALYZE */
+
 function analyze(){
 
   const jd = document.getElementById("jobDesc").value.toLowerCase();
@@ -77,18 +78,19 @@ function analyze(){
   const matched = jdSkills.filter(skill => resumeWords.includes(skill));
   const missing = jdSkills.filter(skill => !resumeWords.includes(skill));
 
-  /* better scoring */
+ 
   let score = Math.round((matched.length / (jdSkills.length || 1)) * 100);
 
-  /* avoid fake 100% */
+
   if(jdSkills.length < 3) score = Math.min(score, 70);
 
-  /* UI update */
+  
   document.getElementById("result").classList.remove("hidden");
   document.getElementById("bar").style.width = score+"%";
   document.getElementById("scoreText").innerText = score + "% Match";
 
-  /* breakdown */
+
+  /* breakdown section logic*/
   document.getElementById("breakdown").innerHTML = `
     <li>Skills Found: ${matched.length}</li>
     <li>Missing Skills: ${missing.length}</li>
@@ -143,7 +145,7 @@ function analyze(){
   }
 }
 
-/* download report */
+/* download report logic*/
 function downloadReport(){
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
