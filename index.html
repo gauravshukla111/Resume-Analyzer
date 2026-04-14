@@ -1,104 +1,119 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Resume Analyzer</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Resume Analyzer</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<style>
-body{
-  background: radial-gradient(circle at top, #111 0%, #000 100%);
-}
+    <style>
+      body {
+        background: radial-gradient(circle at top, #111 0%, #000 100%);
+      }
 
-.glass{
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.1);
-}
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
 
-.drop{
-  border:2px dashed rgba(255,255,255,0.2);
-}
-.drop:hover{
-  border-color:white;
-}
+      .drop {
+        border: 2px dashed rgba(255, 255, 255, 0.2);
+      }
+      .drop:hover {
+        border-color: white;
+      }
 
-.progress{
-  transition: width 1s ease;
-}
-</style>
-</head>
+      .progress {
+        transition: width 1s ease;
+      }
+    </style>
+  </head>
 
-<body class="text-white min-h-screen flex justify-center items-center">
+  <body class="text-white min-h-screen flex justify-center items-center">
+    <div class="w-full max-w-4xl space-y-6">
+      <h1 class="text-4xl font-bold text-center">Resume Analyzer</h1>
 
-<div class="w-full max-w-4xl space-y-6">
+      <!-- upload resume section -->
+      <div
+        id="dropArea"
+        class="glass drop p-6 rounded-xl text-center cursor-pointer"
+      >
+        <p>Drag & Drop Resume OR Click</p>
+        <input
+          type="file"
+          id="resume"
+          class="hidden"
+          accept="application/pdf"
+        />
+        <p id="status" class="mt-2 text-gray-400">No file selected</p>
+      </div>
 
-<h1 class="text-4xl font-bold text-center">Resume Analyzer</h1>
+      <!-- resume preview -->
+      <iframe id="preview" class="w-full h-60 rounded-xl hidden"></iframe>
 
-<!-- upload resume section -->
-<div id="dropArea" class="glass drop p-6 rounded-xl text-center cursor-pointer">
-  <p>Drag & Drop Resume OR Click</p>
-  <input type="file" id="resume" class="hidden" accept="application/pdf">
-  <p id="status" class="mt-2 text-gray-400">No file selected</p>
-</div>
+      <!-- job description section -->
+      <textarea
+        id="jobDesc"
+        class="w-full p-3 rounded-xl glass"
+        placeholder="Paste Your Full Job Description here..."
+      ></textarea>
 
-<!-- resume preview -->
-<iframe id="preview" class="w-full h-60 rounded-xl hidden"></iframe>
+      <button
+        onclick="analyze()"
+        class="w-full p-3 bg-white text-black rounded-xl font-semibold hover:scale-105 transition"
+      >
+        Analyze Resume
+      </button>
+      <div id="result" class="hidden space-y-5">
+        <!-- resume analyze score -->
+        <div class="glass p-5 rounded-xl">
+          <p>Match Score</p>
+          <div class="w-full bg-gray-800 h-3 rounded mt-2">
+            <div
+              id="bar"
+              class="progress h-3 bg-white rounded"
+              style="width: 0%"
+            ></div>
+          </div>
+          <p id="scoreText"></p>
+        </div>
 
-<!-- job description section -->
-<textarea id="jobDesc"
-class="w-full p-3 rounded-xl glass"
-placeholder="Paste Your Full Job Description here..."></textarea>
+        <!-- breakdown section -->
+        <div class="glass p-5 rounded-xl">
+          <p>Breakdown</p>
+          <ul id="breakdown"></ul>
+        </div>
 
-<button onclick="analyze()" class="w-full p-3 bg-white text-black rounded-xl font-semibold hover:scale-105 transition">
- Analyze Resume</button>
-<div id="result" class="hidden space-y-5">
+        <!-- skills -->
+        <div class="glass p-5 rounded-xl">
+          <p>Matched Skills</p>
+          <div id="skills" class="flex flex-wrap gap-2"></div>
+        </div>
 
-<!-- resume analyze score -->
-<div class="glass p-5 rounded-xl">
-<p>Match Score</p>
-<div class="w-full bg-gray-800 h-3 rounded mt-2">
-<div id="bar" class="progress h-3 bg-white rounded" style="width:0%"></div>
-</div>
-<p id="scoreText"></p>
-</div>
+        <!-- missing skills section -->
+        <div class="glass p-5 rounded-xl">
+          <p>Missing Skills</p>
+          <div id="missing" class="flex flex-wrap gap-2"></div>
+        </div>
 
-<!-- breakdown section -->
-<div class="glass p-5 rounded-xl">
-<p>Breakdown</p>
-<ul id="breakdown"></ul>
-</div>
+        <!-- suggest imrovment section -->
+        <div class="glass p-5 rounded-xl">
+          <p>Suggestions</p>
+          <ul id="suggestions" class="list-disc ml-5"></ul>
+        </div>
 
-<!-- skills -->
-<div class="glass p-5 rounded-xl">
-<p>Matched Skills</p>
-<div id="skills" class="flex flex-wrap gap-2"></div>
-</div>
+        <button
+          onclick="downloadReport()"
+          class="w-full p-3 bg-white text-black rounded-xl"
+        >
+          Download Report
+        </button>
+      </div>
+    </div>
 
-<!-- missing skills section -->
-<div class="glass p-5 rounded-xl">
-<p>Missing Skills</p>
-<div id="missing" class="flex flex-wrap gap-2"></div>
-</div>
-
-<!-- suggest imrovment section -->
-<div class="glass p-5 rounded-xl">
-<p>Suggestions</p>
-<ul id="suggestions" class="list-disc ml-5"></ul>
-</div>
-
-<button onclick="downloadReport()"
-class="w-full p-3 bg-white text-black rounded-xl">
-Download Report
-</button>
-
-</div>
-
-</div>
-
-<script src="app.js"></script>
-</body>
+    <script src="app.js"></script>
+  </body>
 </html>
