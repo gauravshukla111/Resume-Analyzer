@@ -37,7 +37,7 @@ const skillDB = {
 };
 
 
-/* analyze */
+/* analyze resume */
 function analyzeResume(){
 
   if(!resumeText){
@@ -83,7 +83,8 @@ function analyzeResume(){
     missingDiv.innerHTML="";
     missing.forEach(s=>{
       missingDiv.innerHTML += `<span class="px-3 py-1 bg-red-500 rounded">${s}</span>`;
-    });
+    }
+  );
 
     const sug = document.getElementById("suggestions");
     sug.innerHTML="";
