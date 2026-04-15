@@ -177,6 +177,5 @@ function downloadReport() {
 
   doc.text("Resume Analysis Report", 10, 10);
   doc.text(document.getElementById("scoreText").innerText, 10, 20);
-
-  doc.save("report.pdf");
+   doc.save("report.pdf");
 }
