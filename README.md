@@ -3,7 +3,6 @@
 ![Status](https://img.shields.io/badge/Status-Live-success)
 ![Tech](https://img.shields.io/badge/Tech-HTML%20%7C%20Tailwind%20%7C%20JavaScript-black)
 ![Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-black)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
@@ -35,16 +34,6 @@ It helps you understand:
 - 📈 Animated Progress Bar
 - 🎨 Premium Dark UI
 - 📥 Download Analysis Report (PDF)
-
----
-
-## 🖼️ Preview  
-
-### 🧾 Resume Upload UI  
-![Preview1](https://via.placeholder.com/800x400?text=Resume+Upload+UI)
-
-### 📊 Analysis Result  
-![Preview2](https://via.placeholder.com/800x400?text=Analysis+Dashboard)
 
 ---
 
@@ -94,15 +83,6 @@ open index.html
 
 ---
 
-## 🔮 Future Improvements  
-
-- 🤖 OpenAI API integration  
-- 🔐 User login system  
-- 📊 Resume history tracking  
-- 🎤 AI Mock Interview feature  
-- 📄 ATS optimization score  
-
----
 
 ## 👨‍💻 Author  
 
